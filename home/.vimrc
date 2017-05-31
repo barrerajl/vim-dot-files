@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'bling/vim-airline'
+
 Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'tpope/vim-fugitive'
@@ -33,14 +34,45 @@ Plugin 'scrooloose/nerdtree'
 
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
-Plugin 'scrooloose/syntastic'
 Plugin 'ngmy/vim-rubocop'
 
 Plugin 'tpope/vim-endwise'
 
 Plugin 'thoughtbot/vim-rspec'
 
+Plugin 'jpo/vim-railscasts-theme'
+
+" Needed for vim-session
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+
+" Buffer unload without clossing the window
+Plugin 'qpkorr/vim-bufkill'
+
+" need to install ctags ubuntu package or similar
+Plugin 'ludovicchabant/vim-gutentags'
+
+" colors the parenthesis and so...
+Plugin 'kien/rainbow_parentheses.vim'
+
+" Shows a vertical line for code blocks
+Plugin 'Yggdroot/indentLine'
+
+" Fast file search need to install ack-grep package in ubuntu or similar
+Plugin 'mileszs/ack.vim'
+
+" Code completion and other helping functions
+Plugin 'vim-syntastic/syntastic'
+
+" Resize windows
+Plugin 'breuckelen/vim-resize'
+
+" Help with tags and quotes surrounding
 Plugin 'tpope/vim-surround'
+
+" CtrlP dependent plugin
+Plugin 'ivalkeen/vim-ctrlp-tjump'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -63,14 +95,15 @@ set shiftwidth=2
 set shell=/bin/bash
 set smartindent
 set scrolloff=2
-" vim-colors-solarized configuration
+"vim-colors-solarized configuration
 syntax enable
-set background=dark
-let g:solarized_termcolors=256
+"set background=dark
+"let g:solarized_termcolors=256
 
-if !empty(glob("~/.vim/bundle/vim-colors-solarized"))
-  colorscheme solarized
-endif
+" if !empty(glob("~/.vim/bundle/vim-colors-solarized"))
+"   colorscheme solarized
+" endif
+colorscheme railscasts
 
 "syntastic & rubocop"
 if !empty(glob("~/.vim/bundle/sytastic"))
@@ -91,11 +124,50 @@ let g:airline_theme='light'
 " leader
 let mapleader = ","
 
+" vim-rspec config
+" RSpec.vim mappings
 " vim-rspec
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
+let g:rspec_command = "!bundle exec rspec {spec}"
 
-" search
-set incsearch
+" vim-session options
+let g:session_autosave='yes'
+let g:session_autosave_periodic=1
+
+" NERDtree config
+let NERDTreeShowHidden=1
+
+" Undo
+set undofile                " Save undo's after file closes
+set undodir=~/.vim_undo     " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
+" For rainbow parenthesis
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" CtrlP highlight
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+" Syntastic config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" vim-ctrlp-tjump key binding
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
+
+" commands
+command -nargs=? -bang Buffer if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
