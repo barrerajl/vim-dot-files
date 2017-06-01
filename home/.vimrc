@@ -103,7 +103,9 @@ syntax enable
 " if !empty(glob("~/.vim/bundle/vim-colors-solarized"))
 "   colorscheme solarized
 " endif
-colorscheme railscasts
+if !empty(glob("~/.vim/bundle/vim-colors-solarized/"))
+  colorscheme railscasts
+endif
 
 "syntastic & rubocop"
 if !empty(glob("~/.vim/bundle/sytastic"))
