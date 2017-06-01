@@ -1,3 +1,4 @@
+set encoding=utf-8
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -108,7 +109,7 @@ if !empty(glob("~/.vim/bundle/vim-colors-solarized/"))
 endif
 
 "syntastic & rubocop"
-if !empty(glob("~/.vim/bundle/syntastic"))
+if !empty(glob("~/.vim/bundle/syntastic/"))
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
   set statusline+=%*
@@ -149,7 +150,7 @@ set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
 " For rainbow parenthesis
-if !empty(glob("~/.vim/bundle/rainbow_parentheses.vim"))
+if !empty(glob("~/.vim/bundle/rainbow_parentheses.vim/"))
   au VimEnter * RainbowParenthesesToggle
   au Syntax * RainbowParenthesesLoadRound
   au Syntax * RainbowParenthesesLoadSquare
