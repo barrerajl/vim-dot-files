@@ -108,7 +108,7 @@ if !empty(glob("~/.vim/bundle/vim-colors-solarized/"))
 endif
 
 "syntastic & rubocop"
-if !empty(glob("~/.vim/bundle/sytastic"))
+if !empty(glob("~/.vim/bundle/syntastic"))
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
   set statusline+=%*
