@@ -74,6 +74,9 @@ Plugin 'tpope/vim-surround'
 " CtrlP dependent plugin
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 
+" Highlight searchs
+Plugin 'haya14busa/incsearch.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -116,6 +119,9 @@ if !empty(glob("~/.vim/bundle/syntastic/"))
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 0
   let g:syntastic_ruby_checkers = ['rubocop']
+  let g:syntastic_loc_list_height=3
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 0
 end
 
 " vim-airline configuration
@@ -142,6 +148,9 @@ let g:session_autosave_periodic=1
 
 " NERDtree config
 let NERDTreeShowHidden=1
+" Hacks for a faster NERDTree
+set ttyfast
+set lazyredraw
 
 " Undo
 set undofile                " Save undo's after file closes
@@ -160,19 +169,17 @@ end
 " CtrlP highlight
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
-" Syntastic config
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
 " vim-ctrlp-tjump key binding
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
+
+" incsearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" maps ctrl c for copy
+map <C-c> "+y<cr>
 
 " commands
 command -nargs=? -bang Buffer if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif

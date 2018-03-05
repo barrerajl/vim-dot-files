@@ -9,5 +9,5 @@ You need to have
 
 # Installation
 ```
-homesick clone elafo/vim-dot-files && homesick symlink vim-dot-files && vim +PluginInstall +qall
+homesick clone barrerajl/vim-dot-files && homesick symlink vim-dot-files && vim +PluginInstall +qall
 ```
